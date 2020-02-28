@@ -122,7 +122,7 @@ public class Main extends javax.swing.JFrame {
         respuesta=(new BuscaDatos().translate(texto.getText()));
         preguntagenerada=(new BuscaDatos().translate(generarpregunta()));
         pantalla.append("Usted: "+texto.getText() +"\n");
-        if (respuesta.equalsIgnoreCase("ok")){
+        if (respuesta.equalsIgnoreCase(" ")){
         pantalla.append("Cortana: Podrias enseñarme que debo responder si me dicen: '"+pregunta+"' por favor (si/no)\n");
         String respuestUsuario= JOptionPane.showInputDialog("Deseas enseñarle?(si/no)");
         if (respuestUsuario.equalsIgnoreCase("si")){
