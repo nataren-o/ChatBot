@@ -31,7 +31,7 @@ public class BuscaDatos extends FileController{
     
     public String translate(String word)
     {
-        String translation = "Que me cuentas?";
+        String translation = "ok";
         String palabraGuardada="";
         String palabra=word;
         int contador=0, contador2=0;

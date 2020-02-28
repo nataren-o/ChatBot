@@ -64,7 +64,7 @@ public class Main extends javax.swing.JFrame {
         online.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         Namebot.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        Namebot.setText("ChatBot");
+        Namebot.setText("INTELIGENCIA ARTIFICIAL");
 
         jButton1.setText("Enseñar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -86,10 +86,11 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(enviar))
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Namebot)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(209, 209, 209)
                         .addComponent(online, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 452, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addComponent(Namebot)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -99,8 +100,9 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(online, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Namebot))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Namebot)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -192,8 +194,8 @@ public class Main extends javax.swing.JFrame {
     }
     public void animacionEscribir(String respuestaxd) throws InterruptedException, URISyntaxException, IOException{
         //variables para el sonido
-        sonido1 =java.applet.Applet.newAudioClip(getClass().getResource("./recibido.mp3"));
-        sonido2 =java.applet.Applet.newAudioClip(getClass().getResource("./enviado.mp3"));
+        sonido1 =java.applet.Applet.newAudioClip(getClass().getResource("./recibido.wav"));
+        sonido2 =java.applet.Applet.newAudioClip(getClass().getResource("./enviado.wav"));
         //se llama a la calse de ramdom, es el tiempo que se tarda en responder
         Thread.sleep(generarRandom());
         online.setForeground(Color.blue);
@@ -215,7 +217,7 @@ public class Main extends javax.swing.JFrame {
     }
     //método que muestra cuando está escribiendo
       public void animacionpregunta(String respuestaxd) throws InterruptedException{
-        sonido1 =java.applet.Applet.newAudioClip(getClass().getResource("./recibido.mp3"));
+        sonido1 =java.applet.Applet.newAudioClip(getClass().getResource("./recibido.wav"));
         //tiempo que se lleva escribiendo o en responder
         Thread.sleep(1500);
         online.setText("Escribiendo"); 
