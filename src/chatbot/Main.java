@@ -15,9 +15,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class Main extends javax.swing.JFrame {
-
+    //variables 
     String pregunta, respuesta,preguntagenerada;
     boolean reproducciendo=false;
+    //variable tió audio
      AudioClip sonido1, sonido2, alive;
      
     
@@ -114,32 +115,54 @@ public class Main extends javax.swing.JFrame {
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
         // TODO add your handling code here:
+        //es el contexto de la ejecución
+        //con el Runnable se procesa los objetos como los mensajes
         Thread hilo = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    //toma lo que tiene el txt
         pregunta=texto.getText();
+        //se busca lo que se ingresó en el txt, y se llama a la clase buscaDatos
         respuesta=(new BuscaDatos().translate(texto.getText()));
+        //con esto se genera la pregunta
         preguntagenerada=(new BuscaDatos().translate(generarpregunta()));
-        pantalla.append("Usted: "+texto.getText() +"\n");
-        if (respuesta.equalsIgnoreCase(" ")){
-        pantalla.append("Cortana: Podrias enseñarme que debo responder si me dicen: '"+pregunta+"' por favor (si/no)\n");
+        //se muestra lo que yo pregunté en el cuadro
+        pantalla.append("Usuario: "+texto.getText() +"\n");
+        //si lo que se preguntó no existe en el txt entonces
+        if (respuesta.equalsIgnoreCase("ok")){
+            //le pregunta al programa que le enseñe.
+        pantalla.append("AI: Podrias enseñarme que debo responder si me dicen: '"+pregunta+"' por favor (si/no)\n");
+        //pregunta al usuario si quiere enseñarle lo que le preguntó.
         String respuestUsuario= JOptionPane.showInputDialog("Deseas enseñarle?(si/no)");
+        //si responde sí entonces abre un input dialog
         if (respuestUsuario.equalsIgnoreCase("si")){
+            //le pregunta qué quiere que responda cuando le haga dicha pregunta
              String respuestUsuarioPregunta= JOptionPane.showInputDialog("Que responder a '"+pregunta+"'");
+             //llama a la case aprender
              Leer aprender =new Leer();
+             //y entonces la guarda 
              String nuevapalabra=aprender.preguntanueva(pregunta,respuestUsuarioPregunta);
+             //lee los datos y los agrega al txt
              aprender.guardar(aprender.leertxt("datos.txt"), nuevapalabra);   
         }
     }
         texto.setText("");
+        //se muestra la resputa como una animación
         animacionEscribir(respuesta);
+        
         int probabilidad=mitadProbabilidad();
         //System.out.println(probabilidad);
+        //si la probalidad está mayor que 5
         if(probabilidad>5){
         //  System.out.println("entra");
+            //es cuando uno ya no le escribe o está aburrida la cosa entocnes ella pregunta 
+            //algo de lo que está en el txt
              animacionpregunta(preguntagenerada);
-             if (preguntagenerada.equalsIgnoreCase("pongamos musica") && reproducciendo != true){
+             //compara si lo que se le preguntó está en el txt
+             //reproduce la música establecida 
+                         if (preguntagenerada.equalsIgnoreCase("pongamos musica") && reproducciendo != true){
+                             
                  alive =java.applet.Applet.newAudioClip(getClass().getResource("./alive.wav"));
                  alive.play();
              }
@@ -152,32 +175,36 @@ public class Main extends javax.swing.JFrame {
         hilo.start();
 
     }//GEN-LAST:event_enviarActionPerformed
-
+    //con esto se genera, establecidadas en el txt
     public String generarpregunta(){
         int numero;
+        //escoje una pregunta de las que están en el txt
         numero = (int) (Math.random() * 9) + 1;
         String preguntaAleatoria = Integer.toString(numero);
         String preguntacompletada= preguntaAleatoria+"p";
         return preguntacompletada;
     }
+    //metodo para la probalidad de las resputsa que está en un rango de 9 + 1
     public int mitadProbabilidad(){
          int numero;
         numero = (int) (Math.random() * 9) + 1;
         return numero;
     }
     public void animacionEscribir(String respuestaxd) throws InterruptedException, URISyntaxException, IOException{
-        sonido1 =java.applet.Applet.newAudioClip(getClass().getResource("./mensajellegada.wav"));
-        sonido2 =java.applet.Applet.newAudioClip(getClass().getResource("./pop.wav"));
+        //variables para el sonido
+        sonido1 =java.applet.Applet.newAudioClip(getClass().getResource("./recibido.mp3"));
+        sonido2 =java.applet.Applet.newAudioClip(getClass().getResource("./enviado.mp3"));
+        //se llama a la calse de ramdom, es el tiempo que se tarda en responder
         Thread.sleep(generarRandom());
         online.setForeground(Color.blue);
         sonido2.play();
-        online.setText("Visto");
+        online.setText("Visto_");
         Thread.sleep(generarRandom());
-        online.setText("Escribiendo"); 
+        online.setText("Escribiendo_"); 
         Thread.sleep(generarRandom());
         online.setText("");
         sonido1.play();
-        pantalla.append("Cortana: "+ respuestaxd+"\n");
+        pantalla.append("AI: "+ respuestaxd+"\n");
           if(pregunta.equalsIgnoreCase("reproducir musica")){
             reproducciendo=true;
               Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=I_izvAbhExY"));
@@ -186,22 +213,25 @@ public class Main extends javax.swing.JFrame {
         }
         //  System.out.println(generarRandom());
     }
+    //método que muestra cuando está escribiendo
       public void animacionpregunta(String respuestaxd) throws InterruptedException{
-        sonido1 =java.applet.Applet.newAudioClip(getClass().getResource("./mensajellegada.wav"));
+        sonido1 =java.applet.Applet.newAudioClip(getClass().getResource("./recibido.mp3"));
+        //tiempo que se lleva escribiendo o en responder
         Thread.sleep(1500);
         online.setText("Escribiendo"); 
         Thread.sleep(1000);
         online.setText("");
         sonido1.play();
-        pantalla.append("Cortana: "+ respuestaxd+"\n");
+        pantalla.append("AI: "+ respuestaxd+"\n");
     }
-    
+    //generador del tiempo que se lleva en ver el mensaje
     public int generarRandom(){
         int numero;
-        numero = (int) (Math.random() * 4000) + 1000;
+        numero = (int) (Math.random() * 3000) + 1000;
         return numero;
         
     }
+    
     public void fijarTexto(){
          pantalla.append("Maquina: "+ respuesta+"\n");
         texto.setText("");
@@ -214,10 +244,15 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        //botón de aprender 
          String UsuarioPregunta= JOptionPane.showInputDialog("Ingrese pregunta");
+            //muestra el imput junto con lo que escribió
          String respuestUsuarioPregunta= JOptionPane.showInputDialog("Que responder a '"+ UsuarioPregunta+"'");
+         //lee lo que se ingresó en el input
          Leer aprender =new Leer();
+         //junta todo
          String nuevapalabra=aprender.preguntanueva(UsuarioPregunta,respuestUsuarioPregunta);
+         //guarda en el txt lo que aprendió
          aprender.guardar(aprender.leertxt("datos.txt"), nuevapalabra);   
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -31,7 +31,7 @@ public class BuscaDatos extends FileController{
     
     public String translate(String word)
     {
-        String translation = "ok";
+        String translation = "Que me cuentas?";
         String palabraGuardada="";
         String palabra=word;
         int contador=0, contador2=0;
@@ -42,23 +42,33 @@ public class BuscaDatos extends FileController{
             boolean encontro=false;
             while(line != null && encontro != true)
             {
+                //se crea array string y se separa por medio de #
                 String[] tupla = line.split("#");
+                //se crea array string y se separa por mdio de espacios
                 String[] tuplados =palabra.split(" ");
-
+                
+                //for que obtiene la medidad de las palabras
                 for (int i=0;i<=tuplados.length-1;i++){ 
+                    //for que valida que tiene que ser igual o menor a la cantidad de tuplados
                 for(int j=0;j<=tupla.length-1;j++){
+                    //if que compara si son iguales los estrings buscados
+                    //retorna true si son iguales y false si no son iguales
                 if (tuplados[i].equalsIgnoreCase(tupla[j]))
                 {
+                    //muestra los datos encontrados que estén en la misma línea encontrada como su repuesta
                 translation = tupla[tupla.length-1];
                 contador++;
                 }
                 }
                 }
+                //toma la respuesta correcta, esta es la que se ingresa en el txt si está en la misma línea la 
+                //muestra
                if (contador>=contador2){
                    contador2=contador;
                    palabraGuardada=translation;
                }
                 contador=0;
+                //lee la línea para el txt
                 line = fileReader.readLine();
             }
            //  System.out.println("palbra acumulada : "+ palabraGuardada);
@@ -78,6 +88,7 @@ public class BuscaDatos extends FileController{
         {
             try
             {
+                //termina el evento de leer lo que se ingresa
                 fileReader.close();
             }
 

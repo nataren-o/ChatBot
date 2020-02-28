@@ -17,7 +17,7 @@ public class Chatbot {
         gui.setVisible(true);
         gui.setDefaultCloseOperation(EXIT_ON_CLOSE);
         gui.setResizable(false);
-        gui.setTitle("ChatBot By Granda");
+        gui.setTitle("ChatBot By Nenton");
 
     }
     

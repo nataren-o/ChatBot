@@ -11,6 +11,7 @@ import java.io.RandomAccessFile;
 
 public class FileController
 {
+    //variable tipo archivo
     public File file;
     public FileController(String fileName)
     {
@@ -26,11 +27,16 @@ public class FileController
         StringBuilder fileContent = new StringBuilder();
         try
         {
+            // constructor que accede al txt de forma aleatoria 
+            //con la "r" lee, es de read!
             RandomAccessFile fileReader = new RandomAccessFile(file, "r");
+           //lee la línea a la que se accedió
             String line = fileReader.readLine();
-
+            //sí la línea diferente de null
             while (line != null)
             {
+                //se agregan los datos encontrados con la variable line
+                //los va agregando al final siempre
                 fileContent.append("\n").append(line);
                 line = fileReader.readLine();
             }
@@ -55,13 +61,16 @@ public class FileController
             ioe.printStackTrace();
         }
 
+        //actualiza el txt y lo convierte a string si loque se ingresó fueron números
         return fileContent.toString();
     }
 
+     //método para guardar recive la variable de arriba
     public void save(String fileContent)
     {
         try
         {
+            //printstream para recuperar información del txt y los muestra al usuario
             PrintStream printStream = new PrintStream(new FileOutputStream(file));
             printStream.println(fileContent);
             printStream.flush();
